@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "nome": "Vaso Geométrico Moderno",
+    "descricao": "Vaso 3D com design geométrico contemporâneo, perfeito para plantas suculentas e decoração moderna. Impresso em PLA de alta qualidade com acabamento liso.",
+    "tamanho": "Pequeno (10cm x 10cm x 12cm)",
+    "preco": 45.9,
+    "imagens": [
+      "http://localhost:3001/public/img/imagem-1755306094513-814184276.jpg"
+    ]
+  },
+  {
+    "id": 2,
+    "nome": "Vaso Orgânico Texturizado",
+    "descricao": "Vaso com formas orgânicas e textura única, inspirado na natureza. Ideal para plantas de médio porte e ambientes que valorizam o design biofílico.",
+    "tamanho": "Médio (15cm x 15cm x 18cm)",
+    "preco": 67.5,
+    "imagens": [
+      "http://localhost:3001/public/img/imagem-1755306111229-647121692.jpg"
+    ]
+  },
+  {
+    "id": 3,
+    "nome": "Vaso Minimalista Grande",
+    "descricao": "Vaso de design minimalista com linhas limpas e elegantes. Perfeito para plantas grandes e espaços amplos que buscam sofisticação e simplicidade.",
+    "tamanho": "Grande (20cm x 20cm x 25cm)",
+    "preco": 89.9,
+    "imagens": [
+      "http://localhost:3001/public/img/imagem-1755306135745-708883777.jpg"
+    ]
+  }
+]
