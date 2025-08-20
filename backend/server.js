@@ -257,7 +257,6 @@ app.get("/api/health", (req, res) => {
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`🚀 Servidor Gaijin3D rodando na porta ${PORT}`);
   console.log(`📁 Servindo arquivos estáticos em /public`);
-  console.log(`🔐 Senha do admin: ${ADMIN_PASSWORD}`);
 });
 
 export default app;
