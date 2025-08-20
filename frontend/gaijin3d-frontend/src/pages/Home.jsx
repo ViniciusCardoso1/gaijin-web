@@ -12,6 +12,16 @@ const Home = () => {
     await carregarProdutos(term);
   };
 
+  const handleWhatsAppClick = () => {
+    // Número do WhatsApp (será definido futuramente - usando placeholder por enquanto)
+    const phoneNumber = "5548996675748"; // Formato: código do país + DDD + número
+    const message = encodeURIComponent(
+      "Olá! Gostaria de receber um orçamento personalizado para meu projeto."
+    );
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+    window.open(whatsappUrl, "_blank");
+  };
+
   return (
     <div className="min-h-screen bg-white">
       <Header
@@ -138,15 +148,17 @@ const Home = () => {
                 contato@gaijin3d.com
               </a>
             </p>
-            <p className="text-gray-700">
-              <a
-                href="tel:+5511999999999"
-                className="hover:text-gray-900 transition-colors"
-              >
-                (11) 99999-9999
-              </a>
-            </p>
+            <p className="text-gray-700">(48) 99667-5748</p>
+            <p className="text-gray-700">(48) 99964-6629</p>
             <p className="text-gray-700">Cocal do Sul, SC - Brasil</p>
+
+            {/* Botão WhatsApp */}
+            <button
+              onClick={handleWhatsAppClick}
+              className="mt-6 px-6 py-3 bg-green-500 hover:bg-green-600 text-white font-medium rounded-lg transition-all duration-300"
+            >
+              Fale conosco no WhatsApp
+            </button>
           </div>
         </section>
       </main>

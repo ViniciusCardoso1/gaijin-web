@@ -19,12 +19,12 @@ const Footer = () => {
             >
               contato@gaijin3d.com
             </a>
-            <a
-              href="tel:+5511999999999"
-              className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
-            >
-              (11) 99999-9999
-            </a>
+            <p className="text-sm text-gray-600 hover:text-gray-900 transition-colors">
+              (48) 99667-5748
+            </p>
+            <p className="text-sm text-gray-600 hover:text-gray-900 transition-colors">
+              (48) 99964-6629
+            </p>
           </div>
           <div className="pt-6 border-t border-gray-200">
             <p className="text-xs text-gray-500">

@@ -4,10 +4,11 @@
     "nome": "Vaso Geométrico Moderno",
     "descricao": "Vaso 3D com design geométrico contemporâneo, perfeito para plantas suculentas e decoração moderna. Impresso em PLA de alta qualidade com acabamento liso.",
     "tamanho": "Pequeno (10cm x 10cm x 12cm)",
-    "preco": 45.9,
+    "preco": 50,
     "imagens": [
       "http://localhost:3001/public/img/imagem-1755306094513-814184276.jpg"
-    ]
+    ],
+    "link": "https://shopee.com.br/Vaso-decorativo-bellavier-Alta-Qualidade-impress%C3%A3o-3D-i.488849220.20998026701"
   },
   {
     "id": 2,
@@ -17,7 +18,8 @@
     "preco": 67.5,
     "imagens": [
       "http://localhost:3001/public/img/imagem-1755306111229-647121692.jpg"
-    ]
+    ],
+    "link": "https://shopee.com.br/gaijin3d?categoryId=100636&entryPoint=ShopByPDP&itemId=20998026701"
   },
   {
     "id": 3,
@@ -26,7 +28,9 @@
     "tamanho": "Grande (20cm x 20cm x 25cm)",
     "preco": 89.9,
     "imagens": [
-      "http://localhost:3001/public/img/imagem-1755306135745-708883777.jpg"
-    ]
+      "http://localhost:3001/public/img/imagem-1755306135745-708883777.jpg",
+      "http://localhost:3001/public/img/imagem-1755659045077-222595594.jpg"
+    ],
+    "link": "https://shopee.com.br/gaijin3d?categoryId=100636&entryPoint=ShopByPDP&itemId=20998026701"
   }
 ]
