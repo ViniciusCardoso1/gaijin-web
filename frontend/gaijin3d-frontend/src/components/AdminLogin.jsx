@@ -1,34 +1,29 @@
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Lock } from 'lucide-react';
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Lock } from "lucide-react";
+import { useApi } from "../hooks/useApi";
 
 const AdminLogin = ({ onLogin }) => {
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
+  const { verificarAuth } = useApi();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
+    setError("");
 
     try {
-      const response = await fetch('http://localhost:3001/api/admin/auth', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ password }),
-      });
-
-      if (response.ok) {
+      const success = await verificarAuth(password);
+      if (success) {
         onLogin(password);
       } else {
-        setError('Senha incorreta');
+        setError("Senha incorreta");
       }
     } catch (err) {
-      setError('Erro de conexão');
+      setError("Erro de conexão com o servidor");
     } finally {
       setLoading(false);
     }
@@ -51,7 +46,10 @@ const AdminLogin = ({ onLogin }) => {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700 mb-2"
+            >
               Senha
             </label>
             <Input
@@ -66,9 +64,7 @@ const AdminLogin = ({ onLogin }) => {
           </div>
 
           {error && (
-            <div className="text-red-600 text-sm text-center">
-              {error}
-            </div>
+            <div className="text-red-600 text-sm text-center">{error}</div>
           )}
 
           <Button
@@ -76,15 +72,12 @@ const AdminLogin = ({ onLogin }) => {
             disabled={loading}
             className="w-full bg-amber-600 hover:bg-amber-700"
           >
-            {loading ? 'Verificando...' : 'Entrar'}
+            {loading ? "Verificando..." : "Entrar"}
           </Button>
         </form>
 
         <div className="mt-6 text-center">
-          <a
-            href="/"
-            className="text-amber-600 hover:text-amber-700 text-sm"
-          >
+          <a href="/" className="text-amber-600 hover:text-amber-700 text-sm">
             ← Voltar ao site
           </a>
         </div>
@@ -94,4 +87,3 @@ const AdminLogin = ({ onLogin }) => {
 };
 
 export default AdminLogin;
-

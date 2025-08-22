@@ -18,7 +18,8 @@ const ADMIN_PASSWORD = "gaijin3d2024";
 // Habilita CORS para qualquer origem (ou coloque o domínio do seu frontend)
 app.use(
   cors({
-    origin: "*", // ou "https://seu-frontend.onrender.com"
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
 app.use(express.json());

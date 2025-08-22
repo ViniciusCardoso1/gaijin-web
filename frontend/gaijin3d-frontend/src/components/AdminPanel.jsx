@@ -1,20 +1,20 @@
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Plus, Edit, Trash2, LogOut, Eye } from 'lucide-react';
-import ProductForm from './ProductForm';
-import { useProdutos } from '../hooks/useApi';
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Plus, Edit, Trash2, LogOut, Eye } from "lucide-react";
+import ProductForm from "./ProductForm";
+import { useProdutos } from "../hooks/useApi";
 
 const AdminPanel = ({ password, onLogout }) => {
   const [showForm, setShowForm] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
-  const { 
-    produtos, 
-    loading, 
-    error, 
-    adicionarProduto, 
-    atualizarProduto, 
-    removerProduto, 
-    uploadImagem 
+  const {
+    produtos,
+    loading,
+    error,
+    adicionarProduto,
+    atualizarProduto,
+    removerProduto,
+    uploadImagem,
   } = useProdutos();
 
   const handleSaveProduct = async (produtoData) => {
@@ -27,7 +27,7 @@ const AdminPanel = ({ password, onLogout }) => {
       setShowForm(false);
       setEditingProduct(null);
     } catch (error) {
-      throw error;
+      alert("Erro ao salvar produto: " + error.message);
     }
   };
 
@@ -41,7 +41,7 @@ const AdminPanel = ({ password, onLogout }) => {
       try {
         await removerProduto(produto.id, password);
       } catch (error) {
-        alert('Erro ao remover produto: ' + error.message);
+        alert("Erro ao remover produto: " + error.message);
       }
     }
   };
@@ -51,12 +51,11 @@ const AdminPanel = ({ password, onLogout }) => {
     setEditingProduct(null);
   };
 
-  const formatPrice = (price) => {
-    return new Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'BRL'
+  const formatPrice = (price) =>
+    new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
     }).format(price);
-  };
 
   if (showForm) {
     return (
@@ -76,7 +75,6 @@ const AdminPanel = ({ password, onLogout }) => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
       <header className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
@@ -90,20 +88,18 @@ const AdminPanel = ({ password, onLogout }) => {
             </div>
             <div className="flex gap-4">
               <Button
-                onClick={() => window.open('/', '_blank')}
+                onClick={() => window.open("/", "_blank")}
                 variant="outline"
                 className="flex items-center gap-2"
               >
-                <Eye className="w-4 h-4" />
-                Ver Site
+                <Eye className="w-4 h-4" /> Ver Site
               </Button>
               <Button
                 onClick={onLogout}
                 variant="outline"
                 className="flex items-center gap-2"
               >
-                <LogOut className="w-4 h-4" />
-                Sair
+                <LogOut className="w-4 h-4" /> Sair
               </Button>
             </div>
           </div>
@@ -111,34 +107,33 @@ const AdminPanel = ({ password, onLogout }) => {
       </header>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Ações */}
         <div className="flex justify-between items-center mb-8">
-          <div>
-            <h2 className="text-2xl font-serif text-gray-900">
-              Produtos ({produtos.length})
-            </h2>
-          </div>
+          <h2 className="text-2xl font-serif text-gray-900">
+            Produtos ({produtos.length})
+          </h2>
           <Button
             onClick={() => setShowForm(true)}
             className="bg-amber-600 hover:bg-amber-700 flex items-center gap-2"
           >
-            <Plus className="w-4 h-4" />
-            Novo Produto
+            <Plus className="w-4 h-4" /> Novo Produto
           </Button>
         </div>
 
-        {/* Lista de Produtos */}
         {loading ? (
           <div className="flex justify-center items-center py-12">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-amber-600"></div>
           </div>
         ) : error ? (
           <div className="text-center py-12">
-            <p className="text-red-600 text-lg">Erro ao carregar produtos: {error}</p>
+            <p className="text-red-600 text-lg">
+              Erro ao carregar produtos: {error}
+            </p>
           </div>
         ) : produtos.length === 0 ? (
           <div className="text-center py-12 bg-white rounded-lg shadow-sm">
-            <p className="text-gray-600 text-lg mb-4">Nenhum produto cadastrado</p>
+            <p className="text-gray-600 text-lg mb-4">
+              Nenhum produto cadastrado
+            </p>
             <Button
               onClick={() => setShowForm(true)}
               className="bg-amber-600 hover:bg-amber-700"
@@ -149,8 +144,10 @@ const AdminPanel = ({ password, onLogout }) => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {produtos.map((produto) => (
-              <div key={produto.id} className="bg-white rounded-lg shadow-sm border overflow-hidden">
-                {/* Imagem */}
+              <div
+                key={produto.id}
+                className="bg-white rounded-lg shadow-sm border overflow-hidden"
+              >
                 <div className="aspect-square bg-gray-100">
                   {produto.imagens && produto.imagens.length > 0 ? (
                     <img
@@ -158,7 +155,8 @@ const AdminPanel = ({ password, onLogout }) => {
                       alt={produto.nome}
                       className="w-full h-full object-cover"
                       onError={(e) => {
-                        e.target.src = 'https://via.placeholder.com/300x300?text=Sem+Imagem';
+                        e.target.src =
+                          "https://via.placeholder.com/300x300?text=Sem+Imagem";
                       }}
                     />
                   ) : (
@@ -167,8 +165,6 @@ const AdminPanel = ({ password, onLogout }) => {
                     </div>
                   )}
                 </div>
-
-                {/* Informações */}
                 <div className="p-4">
                   <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2">
                     {produto.nome}
@@ -184,8 +180,6 @@ const AdminPanel = ({ password, onLogout }) => {
                       {formatPrice(produto.preco)}
                     </span>
                   </div>
-
-                  {/* Ações */}
                   <div className="flex gap-2">
                     <Button
                       onClick={() => handleEditProduct(produto)}
@@ -193,8 +187,7 @@ const AdminPanel = ({ password, onLogout }) => {
                       size="sm"
                       className="flex-1"
                     >
-                      <Edit className="w-4 h-4 mr-1" />
-                      Editar
+                      <Edit className="w-4 h-4 mr-1" /> Editar
                     </Button>
                     <Button
                       onClick={() => handleDeleteProduct(produto)}
@@ -216,4 +209,3 @@ const AdminPanel = ({ password, onLogout }) => {
 };
 
 export default AdminPanel;
-

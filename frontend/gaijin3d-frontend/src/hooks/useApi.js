@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const API_BASE_URL = "https://gaijin-web.onrender.com/api"; // <-- adicionar /api
+const API_BASE_URL = "https://gaijin-web.onrender.com/api";
 
 export const useApi = () => {
   const [loading, setLoading] = useState(false);
@@ -111,8 +111,8 @@ export const useProdutos = () => {
       }
 
       const data = await response.json();
-      // URL completa já pronta para uso no frontend
-      return data.url;
+      // URL pública do Render
+      return `https://gaijin-web.onrender.com${data.url}`;
     } catch (err) {
       console.error("Erro no upload:", err);
       throw err;
