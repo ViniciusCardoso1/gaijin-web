@@ -43,9 +43,12 @@ const Home = () => {
           <p className="text-sm font-medium tracking-widest uppercase mb-4 opacity-90">
             Bem-vindo à
           </p>
-          <h1 className="text-6xl md:text-8xl font-serif font-medium mb-8 leading-tight tracking-tight">
-            Gaijin <span className="inline">3D</span>
-          </h1>
+          <img
+            src="/img/Gaigin.png"
+            alt="Gaijin 3D"
+            className="mx-auto mb-8 max-h-40 md:max-h-56"
+          />
+
           <div className="mt-12">
             <a
               href="#work"
