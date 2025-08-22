@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 
-const API_BASE_URL = "https://gaijin-web.onrender.com/api";
+// Pega da variável de ambiente (ou usa localhost como fallback)
+const API_BASE_URL =
+  import.meta.env.VITE_API_URL || "http://localhost:3000/api";
 
 export const useApi = () => {
   const [loading, setLoading] = useState(false);
@@ -111,8 +113,7 @@ export const useProdutos = () => {
       }
 
       const data = await response.json();
-      // URL pública do Render
-      return `https://gaijin-web.onrender.com${data.url}`;
+      return `${import.meta.env.VITE_API_URL}${data.url}`; // Usa a URL do backend definida no .env
     } catch (err) {
       console.error("Erro no upload:", err);
       throw err;
@@ -121,13 +122,22 @@ export const useProdutos = () => {
 
   const verificarAuth = async (password) => {
     try {
-      await request("/admin/auth", {
+      const res = await fetch(`${API_BASE_URL}/admin/auth`, {
         method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ password }),
       });
-      return true;
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        // Resposta do backend mas com status 401
+        return { success: false, error: data.error || "Senha incorreta" };
+      }
+
+      return { success: data.success };
     } catch (err) {
-      return false;
+      return { success: false, error: "Erro de conexão com o servidor" };
     }
   };
 

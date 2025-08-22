@@ -16,11 +16,14 @@ const AdminLogin = ({ onLogin }) => {
     setError("");
 
     try {
-      const success = await verificarAuth(password);
-      if (success) {
+      const result = await verificarAuth(password);
+
+      if (result.success) {
+        // passa a senha para o pai (App ou AdminPanel)
         onLogin(password);
       } else {
-        setError("Senha incorreta");
+        // mostra a mensagem retornada do backend
+        setError(result.error || "Senha incorreta");
       }
     } catch (err) {
       setError("Erro de conexão com o servidor");

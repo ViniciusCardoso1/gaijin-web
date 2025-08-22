@@ -18,12 +18,11 @@ const ADMIN_PASSWORD = "gaijin3d2024";
 // Habilita CORS para qualquer origem (ou coloque o domínio do seu frontend)
 app.use(
   cors({
-    origin: "http://localhost:5173",
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type"],
   })
 );
-app.use(express.json());
-app.use("/public", express.static(path.join(__dirname, "public")));
 
 // Configuração do multer para upload de imagens
 const storage = multer.diskStorage({
@@ -247,6 +246,18 @@ app.post("/api/admin/auth", (req, res) => {
 // Rota de teste / health check
 app.get("/api/health", (req, res) => {
   res.json({ status: "OK", message: "Servidor Gaijin3D funcionando!" });
+});
+
+// Servir arquivos estáticos do frontend
+app.use(
+  express.static(path.join(__dirname, "../frontend/gaijin3d-frontend/dist"))
+);
+
+// Rota catch-all para o frontend (SPA)
+app.get("*", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "../frontend/gaijin3d-frontend/dist/index.html")
+  );
 });
 
 // Iniciar servidor
