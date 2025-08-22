@@ -9,7 +9,12 @@
     "dev": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["gaijin3d", "vasos", "3d", "api"],
+  "keywords": [
+    "gaijin3d",
+    "vasos",
+    "3d",
+    "api"
+  ],
   "author": "Gaijin3D",
   "license": "ISC",
   "dependencies": {

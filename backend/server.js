@@ -15,7 +15,12 @@ const PORT = process.env.PORT || 3001;
 const ADMIN_PASSWORD = "gaijin3d2024";
 
 // Middlewares
-app.use(cors());
+// Habilita CORS para qualquer origem (ou coloque o domínio do seu frontend)
+app.use(
+  cors({
+    origin: "*", // ou "https://seu-frontend.onrender.com"
+  })
+);
 app.use(express.json());
 app.use("/public", express.static(path.join(__dirname, "public")));
 
@@ -101,10 +106,7 @@ app.get("/api/produtos/buscar", async (req, res) => {
   try {
     const { q } = req.query;
     const produtos = await lerProdutos();
-
-    if (!q) {
-      return res.json(produtos);
-    }
+    if (!q) return res.json(produtos);
 
     const produtosFiltrados = produtos.filter(
       (produto) =>
@@ -123,10 +125,8 @@ app.get("/api/produtos/:id", async (req, res) => {
   try {
     const produtos = await lerProdutos();
     const produto = produtos.find((p) => p.id === parseInt(req.params.id));
-
-    if (!produto) {
+    if (!produto)
       return res.status(404).json({ error: "Produto não encontrado" });
-    }
 
     res.json(produto);
   } catch (error) {
@@ -137,8 +137,7 @@ app.get("/api/produtos/:id", async (req, res) => {
 // Adicionar novo produto (requer autenticação)
 app.post("/api/produtos", verificarAuth, async (req, res) => {
   try {
-    const { nome, descricao, tamanho, preco, imagens, link } = req.body; // ALTERAÇÃO: Adicionado campo 'link'
-
+    const { nome, descricao, tamanho, preco, imagens, link } = req.body;
     if (!nome || !descricao || !tamanho || !preco) {
       return res
         .status(400)
@@ -156,7 +155,7 @@ app.post("/api/produtos", verificarAuth, async (req, res) => {
       tamanho,
       preco: parseFloat(preco),
       imagens: imagens || [],
-      link: link || "", // ALTERAÇÃO: Incluído campo 'link' no novo produto
+      link: link || "",
     };
 
     produtos.push(novoProduto);
@@ -174,13 +173,11 @@ app.post("/api/produtos", verificarAuth, async (req, res) => {
 // Atualizar produto (requer autenticação)
 app.put("/api/produtos/:id", verificarAuth, async (req, res) => {
   try {
-    const { nome, descricao, tamanho, preco, imagens, link } = req.body; // ALTERAÇÃO: Adicionado campo 'link'
+    const { nome, descricao, tamanho, preco, imagens, link } = req.body;
     const produtos = await lerProdutos();
     const index = produtos.findIndex((p) => p.id === parseInt(req.params.id));
-
-    if (index === -1) {
+    if (index === -1)
       return res.status(404).json({ error: "Produto não encontrado" });
-    }
 
     produtos[index] = {
       ...produtos[index],
@@ -189,7 +186,7 @@ app.put("/api/produtos/:id", verificarAuth, async (req, res) => {
       tamanho: tamanho || produtos[index].tamanho,
       preco: preco ? parseFloat(preco) : produtos[index].preco,
       imagens: imagens || produtos[index].imagens,
-      link: link !== undefined ? link : produtos[index].link, // ALTERAÇÃO: Incluído campo 'link' na atualização
+      link: link !== undefined ? link : produtos[index].link,
     };
 
     if (await salvarProdutos(produtos)) {
@@ -207,10 +204,8 @@ app.delete("/api/produtos/:id", verificarAuth, async (req, res) => {
   try {
     const produtos = await lerProdutos();
     const index = produtos.findIndex((p) => p.id === parseInt(req.params.id));
-
-    if (index === -1) {
+    if (index === -1)
       return res.status(404).json({ error: "Produto não encontrado" });
-    }
 
     produtos.splice(index, 1);
 
@@ -227,12 +222,12 @@ app.delete("/api/produtos/:id", verificarAuth, async (req, res) => {
 // Upload de imagem
 app.post("/api/upload", upload.single("imagem"), (req, res) => {
   try {
-    if (!req.file) {
+    if (!req.file)
       return res.status(400).json({ error: "Nenhuma imagem foi enviada" });
-    }
 
     const imageUrl = `/public/img/${req.file.filename}`;
-    res.json({ url: imageUrl });
+    // Retorna URL completa pública
+    res.json({ url: `${req.protocol}://${req.get("host")}${imageUrl}` });
   } catch (error) {
     res.status(500).json({ error: "Erro ao fazer upload da imagem" });
   }
@@ -248,7 +243,7 @@ app.post("/api/admin/auth", (req, res) => {
   }
 });
 
-// Rota de teste
+// Rota de teste / health check
 app.get("/api/health", (req, res) => {
   res.json({ status: "OK", message: "Servidor Gaijin3D funcionando!" });
 });
